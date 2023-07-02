@@ -7,13 +7,16 @@ import Homepage from './pages/Homepage'
 import PageNotFound from './pages/PageNotFound'
 import Login from './pages/Login'
 import CityList from './components/CityList'
+import City from './components/City'
+import CountryList from './components/CountryList'
+import Form from './components/Form';
 //import data from '../data/cities.json';
 
 const BASE_URL = "http://localhost:8000";
      
-     function App() {
-      const [cities, setCities] = useState([]);
-      const [isLoading, setIsLoading] = useState(false);
+function App() {
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
     useEffect(function(){
       async function fetchCities() {
@@ -42,13 +45,14 @@ const BASE_URL = "http://localhost:8000";
               <Route index element={<CityList cities={cities} isLoading={isLoading} />} />
               <Route path = 'cities' element={<CityList 
               cities={cities} isLoading={isLoading} />} />
-              <Route path='countries' element={<p>List of Countries</p>} />
-              <Route path='form' element={<p>Form</p>} />
+              <Route path="cities/:id" element={<City />} />
+              <Route path='countries' element={<CountryList cities={cities} isLoading={isLoading} />} />
+              <Route path='form' element={<Form />} />
           </Route>
+          
           <Route path='*' element={<PageNotFound />} />
          </Routes>
-         </BrowserRouter>
-        
+         </BrowserRouter>        
        )
      }
      
