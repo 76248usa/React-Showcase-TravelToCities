@@ -4,15 +4,18 @@ import styles from './Map.module.css'
 import {MapContainer, Marker, Popup, TileLayer, useMapEvents} from 'react-leaflet';
 import {useCities} from '../context/CitiesContext';
 import {useMap} from 'react-leaflet';
+import {useGeolocation} from '../hooks/useGeoLocation'
+import Button from '../components/Button'
+import {useUrlPosition} from '../hooks/useUrlPosition';
 
-function Map() {
-  
+function Map() {  
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams] = useSearchParams();
-  const {cities} = useCities();
   
-  const mapLat = searchParams.get('lat');
-  const mapLng = searchParams.get('lng');
+  const {cities} = useCities();
+  const {isLoading: isLoadingPosition, position: 
+  geolocationPosition, getPosition} = useGeolocation();
+ const [mapLat, mapLng] = useUrlPosition();
+  
 
   useEffect(() => {
     if(mapLat && mapLng) setMapPosition([mapLat, mapLng])
@@ -20,6 +23,7 @@ function Map() {
 
   return (
     <div className={styles.mapContainer}>
+     
   <MapContainer 
   center={mapPosition}
   zoom={8} scrollWheelZoom={true}
